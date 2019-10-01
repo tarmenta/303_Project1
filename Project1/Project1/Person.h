@@ -2,6 +2,7 @@
 class Person    //People requesting and getting on elevator
 {
 private:
+	int personID;
 	int startTime;
 	int startingFloor;
 	int desiredFloor;
@@ -12,9 +13,19 @@ private:
 
 
 public: // setters and getters for variables
-	Person(); //Default constructor
-	Person(int starttime, int startfloor, int desiredfloor, bool direction)
+	Person()//Default constructor
 	{
+		personID = 0;
+		 startTime = 0;
+		 startingFloor = 0;
+		 desiredFloor = 0;
+		 goingUp = false;
+		 waitTime = 0;
+
+	}
+	Person(int personid,int starttime, int startfloor, int desiredfloor, bool direction)
+	{
+		personID = personid;
 		startTime = starttime;
 		startingFloor = startfloor;
 		desiredFloor = desiredfloor;
@@ -27,6 +38,11 @@ public: // setters and getters for variables
 		{
 			goingUp = false;
 		}
+	}
+
+	int getPersonID()
+	{
+		return personID;
 	}
 
 	int getStartTime()

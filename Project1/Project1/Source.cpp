@@ -11,7 +11,7 @@ int main()
 	int numberElevators;
 	int numberPeople;
 	int floors;
-	char choice;
+	int choice;
 
 	cout << "Welcome to the elevator sim\n";
 	cout << "How many elevators are in the building: ";
@@ -20,12 +20,25 @@ int main()
 	cin >> floors;
 	cout << "\nHow many people will there be: ";
 	cin >> numberPeople;
-	cout << "\nWould you like to randomize there starting floors (y/n): ";
-	cin >> choice;
-	YesorNo(choice);
 	
-	
+	//Pick your scenario
+	choice = WorstToBest();
+	cout << "\nHere is your scene: \n";
 
+	//Creating the vectors
+	vector<Elevator> elevators;
+	vector<Person> people;
+	SceneCreator(choice,numberElevators, numberPeople, elevators, people);
+	//lets see
+	for (int i = 1; i <= numberElevators; i++)
+	{
+		cout << "\nElevator: " << elevators[i].getNumber() << "\n  floor: " << elevators[i].getFloor() << "\n  Pending: " << elevators[i].getPending() << "\n  direction: " << elevators[i].getDirection();
+	}
+	
+	for (int i = 0; i < numberPeople; i++)
+	{
+		cout << "\nPerson: " << people[i].getPersonID() << "\n  Arrival time: " << people[i].getStartTime() << "\n  Starting floor: " << people[i].getStartingFloor() << "\n  Desired floor: " << people[i].getDesiredFloor();
+	}
 	
 	return 0;
 }

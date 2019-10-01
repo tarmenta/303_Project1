@@ -6,74 +6,95 @@
 using namespace std;
 
 
-bool YesorNo(char yesorno)
+int WorstToBest()
 {
+	char scene;
+	int choice;
+	cout << "\nWhich case would you like to run (1,2,3): ";
+	
 	bool tobreak = false;
-	bool choice;
+	
 	while (tobreak == false)
 	{
-
-
-		//yesorno = toupper(yesorno);
-		switch (yesorno)
+		
+		
+		cin >> scene;
+		switch (scene)
 		{
-		case'Y':
-			cout << "Ok I'll randomize";
-			choice = true;
+		case '1':
+			cout << "Ok you picked best case scenario: \n";
+			choice = 1;
 			tobreak = true;
 			break;
 
-		case 'y':
-			cout << "Ok I'll randomize";
-			choice = true;
+		case '2':
+			cout << "Ok you picked medium case scenario: \n";
+			choice =2;
 			tobreak = true;
 			break;
 
-		case 'N':
-			cout << "Ok you can choose";
-			choice = false;
+		case '3':
+			cout << "Ok you picked worst case scenario: \n";
+			choice = 3;
 			tobreak = true;
 			break;
 
-		case 'n':
-			cout << "OK you can choose";
-			choice = false;
-			tobreak = true;
-			break;
+	
 
 		default:
-			cout << "\nPlease pick (y/n)\n";
+			cout << "\nPlease pick (1,2,3)\n";
+			
+			
 			tobreak = false;
-			cin >> yesorno;
+			break;
 		}
 	}
 	return choice;
 
 }
 
-void randomizer(int numPeople)
+//void randomizer(int numPeople)
+//{
+//
+//
+//}
+void SceneCreator(int choice,int numElevtor, int numPeople, vector<Elevator>& elevators, vector<Person>& people)
 {
 
-
-}
-void Creator(int numElevtor, int numPeople)
-{
-
-	vector<Elevator> elevators;
+	//vector<Elevator> elevators;
 	Elevator newElevator;
 
-	vector<Person> people;
+	//vector<Person> people;
 	Person newPerson;
 
+	//Elevator(int elevatornumber, int currentfloor, bool direction)
 	for (int i = 1; i <= numElevtor; i++)
 	{
 		newElevator = Elevator(i, 0, true);
 		elevators.push_back(newElevator);
 
 	}
-	//Person(int starttime, int startfloor, int desiredfloor, bool direction)
-	/*for (int i = 1; i <= numPeople, i++)
+	//Person(int starttime, int startfloor, int desiredfloor, bool directionUP);
+	//Best case scene 1
+	switch (choice)
 	{
-		newPerson = Person(0, 0, 1, true);
-	}*/
+	case 1:
+		for (int i = 0; i <= numPeople; i++)
+		{
+			newPerson = Person(i,(0 + i), (0 + i), (1 + i), true);
+		}
+		break;
+
+	case 2:
+		cout << "Just wait";
+		break;
+
+	case 3:
+		cout << "Just wait";
+		break;
+
+	default:
+		cout << " nothing here";
+	}
+	
 }
