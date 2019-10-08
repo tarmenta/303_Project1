@@ -10,7 +10,7 @@ int WorstToBest()
 {
 	char scene;
 	int choice;
-	cout << "\nWhich case would you like to run (1,2,3): ";
+	cout << "\nWhich case would you like to run (1,2,3): Hint pick 1 :"; //hint pick 1
 	
 	bool tobreak = false;
 	
@@ -75,6 +75,11 @@ void SceneCreator(int choice,int numElevtor, int numPeople, vector<Elevator>& el
 
 	}
 	//Person(int starttime, int startfloor, int desiredfloor, bool directionUP);
+
+
+
+
+
 	//Best case scene 1
 	switch (choice)
 	{

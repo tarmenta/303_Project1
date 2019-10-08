@@ -20,7 +20,7 @@ private:
 
 public:
 	Elevator() {
-		elevatorNumber = 0;
+		elevatorNumber = 0; 
 		currentFloor= 0;
 		pendingFloor = 0;
 		goingUp = false;
@@ -31,7 +31,7 @@ public:
 		elevatorNumber = elevatornumber;
 		currentFloor = currentfloor;
 		goingUp = direction;
-		pendingFloor = 0; //Fix this
+		pendingFloor = 0; //Fix this almost there
 	}
 
 	int getNumber()
@@ -49,12 +49,22 @@ public:
 		return pendingFloor;
 	}
 
-	bool getDirection()
+	string getDirection()
 	{
-		return goingUp;
+		if (goingUp)
+		{
+			return "Up";
+		}
+		else
+		{
+			return "Down";
+		}
 	}
 
-
+	void setPendingFloor(int floorNumber)
+	{
+		pendingFloor = floorNumber;
+	}
 
 
 };
