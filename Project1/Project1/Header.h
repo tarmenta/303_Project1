@@ -68,25 +68,29 @@ void SceneCreator(int choice,int numElevtor, int numPeople, vector<Elevator>& el
 	Person newPerson;
 
 	//Elevator(int elevatornumber, int currentfloor, bool direction)
-	for (int i = 1; i <= numElevtor; i++)
+	for (int i = 0; i < numElevtor; i++)
 	{
-		newElevator = Elevator(i, 0, true);
+		newElevator = Elevator((i+1), 0, true);
 		elevators.push_back(newElevator);
 
 	}
-	//Person(int starttime, int startfloor, int desiredfloor, bool directionUP);
+	
 
 
+	//Person(int personid,int starttime, int startfloor, int desiredfloor, bool direction)
 
+	
 
 
 	//Best case scene 1
 	switch (choice)
 	{
 	case 1:
-		for (int i = 0; i <= numPeople; i++)
+		cout << "Choice 1:\n";
+		for (int i = 0; i < numPeople; i++)
 		{
-			newPerson = Person(i,(0 + i), (0 + i), (1 + i), true);
+			newPerson = Person((i+1),(0 + i), (0 + i), (1 + i), true);
+			people.push_back(newPerson);
 		}
 		break;
 

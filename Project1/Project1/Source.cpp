@@ -37,12 +37,14 @@ int main()
 		cout << "\nElevator: " << elevators[i].getNumber() << "\n  floor: " << elevators[i].getFloor() << "\n  Pending: " << elevators[i].getPending() << "\n  direction: " << elevators[i].getDirection();
 	}
 
-	cout << people[0].getPersonID();
+	//cout << people[1].getPersonID();
 	
-	/*for (int i = 0; i < numberPeople; i++)
+	for (int i = 0; i < numberPeople; i++)
 	{
 		cout << "\nPerson: " << people[i].getPersonID() << "\n  Arrival time: " << people[i].getStartTime() << "\n  Starting floor: " << people[i].getStartingFloor() << "\n  Desired floor: " << people[i].getDesiredFloor();
-	}*/
-	
+	}
+	int x;
+	cin >> x;
+
 	return 0;
 }
