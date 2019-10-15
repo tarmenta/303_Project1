@@ -58,7 +58,7 @@ int WorstToBest()
 //
 //
 //}
-void SceneCreator(int choice,int numElevtor, int numPeople, vector<Elevator>& elevators, vector<Person>& people)
+void SceneCreator(int floor,int numElevtor, int numPeople, vector<Elevator>& elevators, vector<Person>& people)
 {
 
 	//vector<Elevator> elevators;
@@ -78,32 +78,56 @@ void SceneCreator(int choice,int numElevtor, int numPeople, vector<Elevator>& el
 
 
 	//Person(int personid,int starttime, int startfloor, int desiredfloor, bool direction)
-
-	
-
-
-	//Best case scene 1
-	switch (choice)
+	//Make a constant time
+	for (int i = 0; i < numPeople; i++)
 	{
-	case 1:
-		cout << "Choice 1:\n";
-		for (int i = 0; i < numPeople; i++)
+		newPerson = Person((i + 1), (rand() % 30), ((rand()  % floor)+1), ((rand() % floor)+1));
+		while (newPerson.getDesiredFloor() == newPerson.getStartingFloor())
 		{
-			newPerson = Person((i+1),(0 + i), (0 + i), (1 + i), true);
-			people.push_back(newPerson);
+			newPerson = Person((i + 1), (rand() % 30), ((rand() % floor) + 1), ((rand() % floor) + 1));
+
 		}
-		break;
-
-	case 2:
-		cout << "Just wait";
-		break;
-
-	case 3:
-		cout << "Just wait";
-		break;
-
-	default:
-		cout << " nothing here";
+			
+		people.push_back(newPerson);
 	}
+
+
 	
+	
+}
+
+
+void display(vector<int> Anything)
+{
+	cout << "\n\n Here is the vector: ";
+	int size = Anything.size();
+	for (int i = 0; i < size; i++)
+	{
+		cout << Anything[i] << ", ";
+	}
+}
+
+
+void sortThis(vector <int> &num)
+{
+	int i, j, key;
+
+	bool insertionNeeded = false;
+	int size = num.size();
+	for (j = 1; j < size; j++)
+	{
+		key = num[j];
+		insertionNeeded = false;
+		for (i = j - 1; i >= 0; i--) {
+			if (key < num[i]) {
+				num[i + 1] = num[i]; // larger values move right
+				insertionNeeded = true;
+			}
+			else
+				break;
+		}
+		if (insertionNeeded)
+			num[i + 1] = key;    //Put key into its proper location
+	}
+
 }

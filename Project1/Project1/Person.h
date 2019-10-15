@@ -23,16 +23,16 @@ public: // setters and getters for variables
 		 waitTime = 0;
 
 	}
-	Person(int personid,int starttime, int startfloor, int desiredfloor, bool direction)
+	Person(int personid,int starttime, int startfloor, int desiredfloor)
 	{
 		personID = personid;
 		startTime = starttime;
 		startingFloor = startfloor;
 		desiredFloor = desiredfloor;
 
-		if (direction)
+		if (startfloor < desiredFloor)
 		{
-			goingUp = direction;
+			goingUp = true;
 		}
 		else
 		{
