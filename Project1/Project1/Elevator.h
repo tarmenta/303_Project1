@@ -61,6 +61,10 @@ public:
 		}
 	}
 
+	bool isGoing()
+	{
+		return goingUp;
+	}
 	void setPendingFloor(int floorNumber)
 	{
 		pendingFloor = floorNumber;

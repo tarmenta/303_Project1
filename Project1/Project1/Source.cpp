@@ -55,7 +55,7 @@ int main()
 
 
 
-	
+	//This is creating something
 	vector <int> elevator1;
 	
 	//Make a fuction that puts stuff in elevator1 
@@ -73,6 +73,7 @@ int main()
 
 
 	vector<int> arrivalTimes;
+	vector<int> namesPeople;
 	for (int i = 0; i < numberPeople; i++) {
 		//cout << "\nPerson " << i + 1 << " is going to " << people[i].getDesiredFloor();
 		//cin >> floornum;
@@ -80,17 +81,53 @@ int main()
 		/*if (find(elevator1.begin(), elevator1.end(), people[i].getDesiredFloor()) != elevator1.end())
 			cout << "\n";
 		else*/
+		namesPeople.push_back(people[i].getPersonID());
 		arrivalTimes.push_back(people[i].getStartTime());
 	}
 
-	sortThis(arrivalTimes);
+	//cout << "\n\nArrival\n";
+	//display(arrivalTimes);
+	//cout << "\n\nNames\n";
+	//display(namesPeople);
 
+
+	sortThis(arrivalTimes,namesPeople);
+
+	/*cout << "\n\n Arrival\n";
 	display(arrivalTimes);
+	cout << "\n\nNames\n";
+	display(namesPeople);*/
 
-
-
+	int wheelTime = 0;
 	//Start the moving process
-	cout << "At time 0 ";
+	
+	while (wheelTime <= 30)
+	{
+		cout << "\n\nAt time " << wheelTime;
+		int i = 0;
+		while (arrivalTimes[i] == wheelTime)
+		{
+			cout << "Person" << namesPeople[i] << " requests on floor" << people[namesPeople[i]-1].getStartingFloor();
+			if (people[namesPeople[i] - 1].getDirection())
+			{
+				if (elevators[0].isGoing()) //Need to loop  to have more than 2 elevators
+				{
+					cout << "\nElevator" << elevators[0].getNumber()<< " is picking up " << namesPeople[i];
+				}
+				else
+				{
+					cout << "\nElevator" << elevators[1].getNumber()<< " is picking up " << namesPeople[i];
+				}
+			}
+			i++;
+		}
+
+		
+		//check who is going up or down
+		//what elevator goes where
+		
+		wheelTime++;
+	}
 	cout << "\n\nElevator " << elevators[0].getNumber() << " will pick up ";
 	//getting people there display the info
 	//popping them from the vector display there wait time
@@ -98,12 +135,12 @@ int main()
 
 
 
-	display(elevator1);
+	//display(elevator1);
 
 
 
 
 
-
+	system("pause");
 	return 0;
 }

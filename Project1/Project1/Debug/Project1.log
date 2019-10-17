@@ -1,4 +1,4 @@
 ﻿  Source.cpp
-c:\users\tja7w6\github\303_project1\project1\project1\source.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\tja7w6\github\303_project1\project1\project1\source.cpp(17): warning C4101: 'choice': unreferenced local variable
-  Project1.vcxproj -> C:\Users\tja7w6\Github\303_Project1\Project1\Debug\Project1.exe
+c:\users\thomas\desktop\github\303_project1\project1\project1\source.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\thomas\desktop\github\303_project1\project1\project1\source.cpp(17): warning C4101: 'choice': unreferenced local variable
+  Project1.vcxproj -> C:\Users\Thomas\Desktop\GitHub\303_Project1\Project1\Debug\Project1.exe
