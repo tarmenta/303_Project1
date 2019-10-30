@@ -94,7 +94,7 @@ void sortUp(vector<Person>&calls)
 			int indexSmallest = i;
 			for (int j = i + 1; j < (calls.size()); j++) {
 
-				if (calls[j].getDesiredFloor() < calls[indexSmallest].getDesiredFloor()) {/// SELECTION SORT
+				if (calls[j].getStartingFloor() < calls[indexSmallest].getStartingFloor()) {/// SELECTION SORT
 					indexSmallest = j;
 
 				}
@@ -110,7 +110,7 @@ void sortUp(vector<Person>&calls)
 }
 void oragizedRequester(vector<Person>& people)
 {
-
+	
 	if (people.size() > 1)
 	{
 
@@ -138,15 +138,7 @@ void oragizedRequester(vector<Person>& people)
 void oraganizeUpDown(vector<Person> people, vector<Person>& people_going_up, vector<Person>& people_going_down)
 {
 
-	////clear the up and down
-	//if (!people_going_up.empty())
-	//{
-	//	people_going_up.clear();
-	//}
-	//if (!people_going_down.empty())
-	//{
-	//	people_going_down.clear();
-	//}
+	
 
 	for (int i = 0; i < people.size(); i++) {
 		if (people[i].getDirection() == false) {
@@ -185,7 +177,7 @@ int checkProxU(vector<Elevator>elevators)
 	int x = 0;
 	if (sizeup == 1)
 	{
-		return 0;  //returning the 0 index
+		return ups[0].getNumber() - 1;  //returning the 0 index
 	}
 
 
@@ -231,7 +223,7 @@ int checkProxD(vector<Elevator>elevators)
 	int x = 0;
 	if (sizedown == 1)
 	{
-		return 0;
+		return downs[0].getNumber() - 1;
 	}
 
 	for (int i = 1; i < sizedown; i++)
@@ -254,10 +246,11 @@ int checkProxD(vector<Elevator>elevators)
 void oraganizeEmptyU(vector<Elevator>& elevators, vector<Person> people_going_dir)
 {
 	sortUp(people_going_dir);
-	
-	//messed up?
-	int size = elevators.size();
 	int person = people_going_dir.size();
+	person--;
+	
+	int size = elevators.size();
+	
 	for (int i = 0; i < size; i++)
 	{
 		if (!people_going_dir.empty())
@@ -271,9 +264,11 @@ void oraganizeEmptyU(vector<Elevator>& elevators, vector<Person> people_going_di
 
 void oraganizeEmptyD(vector<Elevator>& elevators, vector<Person> people_going_dir)
 {
+	
 	sortUp(people_going_dir);
 	int size = elevators.size();
 	int person = people_going_dir.size();
+	person--;
 
 	for (int i = 0; i < size; i++)
 	{
@@ -285,89 +280,107 @@ void oraganizeEmptyD(vector<Elevator>& elevators, vector<Person> people_going_di
 	}
 }
 
-void decidingU(vector<Elevator>&elevators, vector<Person> people_going_up, vector<Person> people_going_down)
+void decidingU(vector<Elevator>&elevators, vector<Person> people_going_up, vector<Person> requesters)
 {
+	
 	int close = checkProxU(elevators);
 	if (!people_going_up.empty())
 	{
-		cout << "Elevator " << elevators[close].getNumber() << " on floor " << elevators[close].getFloor();
+		cout << "Elevator " << elevators[close].getNumber();
 		
-		elevators[close].setuFloor();
+		
 		elevators[close].setdir(true);
-		elevators[close].elevator_movingU(people_going_up);
-		cout << "\nPicking up at floor " << elevators[close].getPending() << "\n";
-
+		for (int i = 0; i < people_going_up.size(); i++)
+		{
+			if (people_going_up[i].getbutton())
+			{
+				people_going_up.erase(people_going_up.begin() + i);
+			}
+		}
+		if (!(people_going_up.empty()))
+		{
+			elevators[close].elevator_movingU(people_going_up);
+		}
 		
+		for (int i = 0; i < people_going_up.size(); i++)
+		{
+			people_going_up[i].setbutton(true);
+			for (int j = 0; j < requesters.size(); j++)
+			{
+				if (people_going_up[i].getPersonID() == requesters[j].getPersonID())
+				{
+					requesters[j].setbutton(true);
+				}
+			}
+		}
+		
+		
+
+		if (elevators[close].getPending() == elevators[close].getFloor())
+		{
+			elevators[close].popPending(0);
+			cout << "\nPicked up Person " << elevators[close].getpendingfloorId(0) << "\nGoing to floor " << elevators[close].getPending() << endl;
+			elevators[close].poppendingfloorId(0);
+		}
+		else
+		{
+			cout << " going to floor " << elevators[close].getPending() << "\n";
+		}
+		elevators[close].setuFloor();
 
 	}
 }
-void decidingD(vector<Elevator>&elevators, vector<Person> people_going_up, vector<Person> people_going_down)
+void decidingD(vector<Elevator>&elevators,  vector<Person> people_going_down, vector<Person> requesters)
 {
 	int close = checkProxD(elevators);
 	if (!people_going_down.empty())
 	{
-		cout << "Elevator " << elevators[close].getNumber() << " on floor " << elevators[close].getFloor() << " is closer and will handle the down calls.\nFirst going to ";
-		elevators[close].elevator_movingD(people_going_down);
-		cout << elevators[close].getPending() << "\n";
-		elevators[close].setdFloor();
+		cout << "Elevator " << elevators[close].getNumber();
+		
 		elevators[close].setdir(false);
 
-	}
-}
-void deciding(vector<Elevator>&elevators, vector<Person> people_going_up, vector<Person> people_going_down)
-{
-
-	//IF PEOPLE ARE GOING UP AND ELEVATOR 1 PROXIMITY IS LOWER THAN ELEVATOR 2,ELEVATOR 1 WILL GO FIRST AND TAKE UP CALLS
-	if (!people_going_up.empty() && (elevators[0].get_Response_Up() < elevators[1].get_Response_Up())) {
-		cout << "Elevator 1 on floor " << elevators[0].getFloor() << " is closer and will handle the up calls.\n\n" << endl;
-		elevators[0].elevator_movingU(people_going_up);
-		//IF THE  PEOPLE GOING DOWN VECTOR IS FILLED
-		if (!people_going_down.empty()) {
-			cout << "Elevator 2 on floor " << elevators[1].getFloor() << " is  will handle the down calls.\n\n" << endl;
-			elevators[1].elevator_movingU(people_going_down);
+		for (int i = 0; i < people_going_down.size(); i++)
+		{
+			if (people_going_down[i].getbutton())
+			{
+				people_going_down.erase(people_going_down.begin() + i);
+			}
 		}
-	}
-	//IF PEOPLE ARE GOING UP AND ELEVATOR 1 PROXIMITY IS LOWER THAN ELEVATOR 1,ELEVATOR 2 WILL GO FIRST AND TAKE UP CALLS
-	else if (!people_going_up.empty() && (elevators[1].get_Response_Up() < elevators[0].get_Response_Up())) {
-		cout << "Elevator 2 on floor " << elevators[1].getFloor() << " is closer and will handle the up calls.\n\n" << endl;
-		elevators[1].elevator_movingU(people_going_up);
-		//IF THE  PEOPLE GOING DOWN VECTOR IS FILLED
-		if (!people_going_down.empty()) {
-			cout << "Elevator 1 on floor " << elevators[0].getFloor() << " is  will handle the down calls.\n\n" << endl;
-			elevators[0].elevator_movingU(people_going_down);
+		if (!(people_going_down.empty()))
+		{
+			elevators[close].elevator_movingD(people_going_down);
 		}
-	}
-	//IF ELEVATOR 1 AND 2 ARE ON THE SAME FLOOR
-	else if (!people_going_up.empty() && (elevators[0].get_Response_Up() == elevators[1].get_Response_Up())) {
-		cout << " Elevators are on the same floor. Elevator 1 will move first and will handle the up calls.\n\n" << endl;
-		elevators[0].elevator_movingU(people_going_up);
 
-		if (!people_going_down.empty()) {
-			cout << "Elevator 2 on floor " << elevators[1].getFloor() << " is will handle the down calls.\n\n" << endl;
-			elevators[1].elevator_movingU(people_going_down);
+		for (int i = 0; i < people_going_down.size(); i++)
+		{
+			people_going_down[i].setbutton(true);
+			for (int j = 0; j < requesters.size(); j++)
+			{
+				if (people_going_down[i].getPersonID() == requesters[j].getPersonID())
+				{
+					requesters[j].setbutton(true);
+				}
+			}
 		}
+		
+	
+		
+
+		if (elevators[close].getPending() == elevators[close].getFloor())
+		{
+			
+			elevators[close].popPending(0);
+			cout << "\nPicked up Person " << elevators[close].getpendingfloorId(0) << "\nGoing to floor " << elevators[close].getExiting(0) << endl;
+			
+			elevators[close].poppendingfloorId(0);
+		}
+		else
+		{
+			cout << " going to floor "<< elevators[close].getPending() << "\n";
+		}
+		elevators[close].setdFloor();
+	
 	}
-	//IF THERE ARE  ONLY DOWN CALLS AND ELEVATOR 1 IS CLOSER
-	else if (people_going_up.empty() && (elevators[0].get_Response_Down() < elevators[1].get_Response_Down())) {
-		cout << "Elevator 1 on floor " << elevators[0].getFloor() << " is closer and will handle the down calls.\n\n" << endl;
-		elevators[0].elevator_movingU(people_going_down);
-
-	}
-	//IF THERE ARE  ONLY DOWN CALLS AND ELEVATOR 2 IS CLOSER
-	else if (people_going_up.empty() && (elevators[1].get_Response_Down() < elevators[0].get_Response_Down())) {
-		cout << "Elevator 2 on floor " << elevators[1].getFloor() << " is closer and will handle the down calls.\n\n" << endl;
-		elevators[1].elevator_movingU(people_going_down);
-
-
-	}
-	//IF THERE ARE  ONLY DOWN CALLS AND BOTH ARE ONE THE SAME FLOOR
-	else if (people_going_up.empty() && (elevators[0].get_Response_Down() == elevators[1].get_Response_Down())) {
-		cout << "Elevators are on the same floor. Elevator 1 will move first and will handle the down calls.\n\n" << endl;
-		elevators[0].elevator_movingU(people_going_down);
-
-
-	}
-
 }
 
 
@@ -375,10 +388,7 @@ void deciding(vector<Elevator>&elevators, vector<Person> people_going_up, vector
 void wheeloTime(vector<Elevator>elevators, vector<Person> people, int& wheelTime, vector<Person>& requesters)
 {
 	wheelTime++;
-	/*if (!requesters.empty())
-	{
-	requesters.erase(requesters.begin());
-	}*/
+	
 
 	int numberElevators, numberPeople;
 	numberElevators = elevators.size();
@@ -389,7 +399,7 @@ void wheeloTime(vector<Elevator>elevators, vector<Person> people, int& wheelTime
 	//display elevator postion
 	for (int i = 0; i < numberElevators; i++)
 	{
-		cout << elevators[i].getNumber() << " Elevator at Floor " << elevators[i].getFloor() << "going " << elevators[i].getDirection() << "\n";
+		cout << elevators[i].getNumber() << " Elevator at Floor " << elevators[i].getFloor() << "going " << elevators[i].getDirection() << "\npending " << elevators[i].getpendingSize();
 	}
 	//Display people requests by time
 
@@ -413,33 +423,53 @@ void wheeloTime(vector<Elevator>elevators, vector<Person> people, int& wheelTime
 		}
 
 	}
+	
 	//once Exited pop that person
-	if (!itZero)
+	if (!(requesters.empty()))
 	{
+		
 		for (int i = 0; i < elevators.size(); i++)
 		{
+			
 			if (!(elevators[i].getexitingSize() == 0))
 			{
-				for (int j = 0; i < elevators[i].getexitingSize(); j++)
+				
+				for (int j = 0; j < elevators[i].getexitingSize(); j++)
 				{
-					if (elevators[i].getExiting(j) == elevators[i].getFloor())
+					if (elevators[i].getExiting(j) == elevators[i].getFloor() )
 					{
-						elevators[i].popExiting(j);
+						
 						for (int x = 0; x < requesters.size(); x++)
 						{
-							if (requesters[x].getPersonID() == elevators[i].getexitingId(j))
+							if ((requesters[x].getPersonID() == elevators[i].getexitingId(j)) && (requesters[j].getbutton()))
 							{
 
 								cout << "\nElevator " << elevators[i].getNumber() << " is letting Person " << requesters[x].getPersonID() << " off\n";
 								requesters.erase(requesters.begin() + x);
+								elevators[i].popexitingId(j);
+								elevators[i].popExiting(j);
+								
 							}
 						}
+						
 					}
+					
 				}
+				
+
 			}
+
+			
 		}
+
+
+		
 	}
+	
+
+	
 
 
 
 }
+

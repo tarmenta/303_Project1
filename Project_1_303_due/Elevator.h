@@ -18,6 +18,7 @@ private:
 	vector<int> pendingFloor;
 	vector<int> exitingFloor;
 	vector<int> exitingId;
+	vector<int> pendingfloorId;
 	bool goingUp;
 	int up_Response_Num;
 	int down_Response_Num;
@@ -56,6 +57,7 @@ public:
 	int getNumber()
 	{
 		return elevatorNumber;
+		
 	}
 
 	int getFloor()
@@ -74,9 +76,29 @@ public:
 	{
 		return pendingFloor[0];
 	}
+	void popPending(int n)
+	{
+		pendingFloor.erase(pendingFloor.begin() + n);
+	}
+	int getpendingfloorId(int n)
+	{
+		return pendingfloorId[n];
+	}
+	void poppendingfloorId(int n)
+	{
+		pendingFloor.erase(pendingFloor.begin() + n);
+	}
+	int getpendingSize()
+	{
+		return pendingFloor.size();
+	}
 	int getexitingId(int n)
 	{
 		return exitingId[n];
+	}
+	void popexitingId(int n)
+	{
+		exitingId.erase(exitingId.begin() + n);
 	}
 	int getexitingSize()
 	{
@@ -84,11 +106,25 @@ public:
 	}
 	void setuFloor()
 	{
-		currentFloor++;
+		if (currentFloor < pendingFloor[0])
+		{
+			currentFloor++;
+		}
+		else
+		{
+			currentFloor--;
+		}
 	}
 	void setdFloor()
 	{
-		currentFloor--;
+		if (currentFloor < pendingFloor[0])
+		{
+			currentFloor++;
+		}
+		else
+		{
+			currentFloor--;
+		}
 	}
 	bool getUpDown()
 	{
@@ -133,7 +169,10 @@ public:
 
 	void elevator_movingU(vector<Person>calls)
 	{
-
+		
+		int sizeC = calls.size();
+		sizeC--;
+		int sizeU = calls.size();
 		///SWITCHES TO PUT IN ASCENDING ORDER (FOR GOING UP ONLY)
 
 
@@ -154,20 +193,60 @@ public:
 			calls[indexSmallest] = temp2;
 
 		}
-
 		
-		for (int i = 0; i < calls.size(); i++)
+		if (pendingFloor.empty())
 		{
-			if ((calls[i].getStartingFloor() <= up_Response_Num) && (calls[i].getStartingFloor() > currentFloor))
+			for (int i = 0; i < calls.size(); i++)
 			{
-				pendingFloor.push_back(calls[i].getStartingFloor());
-				exitingFloor.push_back(calls[i].getDesiredFloor());
-				exitingId.push_back(calls[i].getPersonID());
 
-				pendingFloor.push_back(calls[i].getDesiredFloor());
+				if (calls.size() == 1)
+				{
+					pendingFloor.push_back(calls[i].getStartingFloor());
+					pendingfloorId.push_back(calls[i].getPersonID());
+					exitingFloor.push_back(calls[i].getDesiredFloor());
+					exitingId.push_back(calls[i].getPersonID());
+
+					pendingFloor.push_back(calls[i].getDesiredFloor());
+				}
+				else if (calls[i].getStartingFloor() <= calls[sizeC].getDesiredFloor())
+				{
+					pendingFloor.push_back(calls[i].getStartingFloor());
+					pendingfloorId.push_back(calls[i].getPersonID());
+					exitingFloor.push_back(calls[i].getDesiredFloor());
+					exitingId.push_back(calls[i].getPersonID());
+
+					pendingFloor.push_back(calls[i].getDesiredFloor());
+				}
+
+
 			}
+		}
+		else
+		{
+			for (int i = 0; i < calls.size(); i++)
+			{
+
+				if (calls.size() == 1)
+				{
+					pendingFloor.push_back(calls[i].getStartingFloor());
+					pendingfloorId.push_back(calls[i].getPersonID());
+					exitingFloor.push_back(calls[i].getDesiredFloor());
+					exitingId.push_back(calls[i].getPersonID());
+
+					pendingFloor.push_back(calls[i].getDesiredFloor());
+				}
+				else if ((calls[i].getStartingFloor() <= calls[sizeC].getDesiredFloor()) && (calls[i].getStartingFloor() > currentFloor))
+				{
+					pendingFloor.push_back(calls[i].getStartingFloor());
+					pendingfloorId.push_back(calls[i].getPersonID());
+					exitingFloor.push_back(calls[i].getDesiredFloor());
+					exitingId.push_back(calls[i].getPersonID());
+
+					pendingFloor.push_back(calls[i].getDesiredFloor());
+				}
 
 
+			}
 		}
 		//Sort it
 		for (int i = 0; i < pendingFloor.size(); i++) {
@@ -194,6 +273,9 @@ public:
 
 	void elevator_movingD(vector<Person>calls)
 	{
+		
+		int sizeC = calls.size();
+		sizeC--;
 		///SWITCHES TO PUT IN ASCENDING ORDER (FOR GOING UP ONLY)
 		if (calls[0].getDirection() == false)
 		{
@@ -217,21 +299,61 @@ public:
 		}
 		reverse(calls.begin(), calls.end());
 
-
-
-		//put thing into pending both starting floor and desired floor
-		for (int i = 0; i < calls.size(); i++)
+		
+		if (pendingFloor.empty())
 		{
-			if ((calls[i].getStartingFloor() >= down_Response_Num) && (calls[i].getStartingFloor() <= currentFloor))
+			for (int i = 0; i < calls.size(); i++)
 			{
-				pendingFloor.push_back(calls[i].getStartingFloor());
-				exitingFloor.push_back(calls[i].getDesiredFloor());
-				exitingId.push_back(calls[i].getPersonID());
 
-				pendingFloor.push_back(calls[i].getDesiredFloor());
+				if (calls.size() == 1)
+				{
+					pendingFloor.push_back(calls[i].getStartingFloor());
+					pendingfloorId.push_back(calls[i].getPersonID());
+					exitingFloor.push_back(calls[i].getDesiredFloor());
+					exitingId.push_back(calls[i].getPersonID());
+
+					pendingFloor.push_back(calls[i].getDesiredFloor());
+				}
+				else if (calls[i].getStartingFloor() >= calls[sizeC].getDesiredFloor())
+				{
+					pendingFloor.push_back(calls[i].getStartingFloor());
+					pendingfloorId.push_back(calls[i].getPersonID());
+					exitingFloor.push_back(calls[i].getDesiredFloor());
+					exitingId.push_back(calls[i].getPersonID());
+
+					pendingFloor.push_back(calls[i].getDesiredFloor());
+				}
+
+
 			}
+		}
+		//put thing into pending both starting floor and desired floor
+		else
+		{
+			for (int i = 0; i < calls.size(); i++)
+			{
+
+				if (calls.size() == 1)
+				{
+					pendingFloor.push_back(calls[i].getStartingFloor());
+					pendingfloorId.push_back(calls[i].getPersonID());
+					exitingFloor.push_back(calls[i].getDesiredFloor());
+					exitingId.push_back(calls[i].getPersonID());
+
+					pendingFloor.push_back(calls[i].getDesiredFloor());
+				}
+				else if ((calls[i].getStartingFloor() >= calls[sizeC].getDesiredFloor()) && (calls[i].getStartingFloor() <= currentFloor))
+				{
+					pendingFloor.push_back(calls[i].getStartingFloor());
+					pendingfloorId.push_back(calls[i].getPersonID());
+					exitingFloor.push_back(calls[i].getDesiredFloor());
+					exitingId.push_back(calls[i].getPersonID());
+
+					pendingFloor.push_back(calls[i].getDesiredFloor());
+				}
 
 
+			}
 		}
 		//Sort it
 		for (int i = 0; i < pendingFloor.size(); i++) {

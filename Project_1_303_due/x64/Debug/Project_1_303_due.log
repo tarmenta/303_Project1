@@ -1,0 +1,18 @@
+﻿  Source.cpp
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Elevator.h(93,1): warning C4267:  'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Elevator.h(105,1): warning C4267:  'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Elevator.h(173,1): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Elevator.h(175,1): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Elevator.h(277,1): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(67,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(158,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(175,22): warning C4267:  '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(203,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(221,26): warning C4267:  '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(249,38): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(252,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(269,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(270,38): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(394,36): warning C4267:  '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tarme\Desktop\GitHub\303_Project1\Project_1_303_due\Header.h(395,30): warning C4267:  '=': conversion from 'size_t' to 'int', possible loss of data
+  Project_1_303_due.vcxproj -> C:\Users\tarme\Desktop\GitHub\303_Project1\x64\Debug\Project_1_303_due.exe
