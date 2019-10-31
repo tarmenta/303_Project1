@@ -86,7 +86,7 @@ public:
 	}
 	void poppendingfloorId(int n)
 	{
-		pendingFloor.erase(pendingFloor.begin() + n);
+		pendingfloorId.erase(pendingfloorId.begin() + n);
 	}
 	int getpendingSize()
 	{
@@ -103,6 +103,10 @@ public:
 	int getexitingSize()
 	{
 		return exitingFloor.size();
+	}
+	int getpendingidSize()
+	{
+		return pendingfloorId.size();
 	}
 	void setuFloor()
 	{
@@ -167,12 +171,14 @@ public:
 		return down_Response_Num;
 	}
 
+	//Puts Requesters into this elevators pending going up
 	void elevator_movingU(vector<Person>calls)
 	{
 		
 		int sizeC = calls.size();
 		sizeC--;
-		int sizeU = calls.size();
+		int sizeP = pendingFloor.size();
+		sizeP--;
 		///SWITCHES TO PUT IN ASCENDING ORDER (FOR GOING UP ONLY)
 
 
@@ -194,11 +200,11 @@ public:
 
 		}
 		
-		if (pendingFloor.empty())
+		if (pendingFloor.empty())//If no pending then just put the person in pending
 		{
 			for (int i = 0; i < calls.size(); i++)
 			{
-
+				
 				if (calls.size() == 1)
 				{
 					pendingFloor.push_back(calls[i].getStartingFloor());
@@ -225,8 +231,8 @@ public:
 		{
 			for (int i = 0; i < calls.size(); i++)
 			{
-
-				if (calls.size() == 1)
+				
+				if ((calls[i].getStartingFloor() <= pendingFloor[sizeP]) && (calls[i].getStartingFloor() >= currentFloor))//Will pick up people on the way of dropping off someone else
 				{
 					pendingFloor.push_back(calls[i].getStartingFloor());
 					pendingfloorId.push_back(calls[i].getPersonID());
@@ -235,15 +241,7 @@ public:
 
 					pendingFloor.push_back(calls[i].getDesiredFloor());
 				}
-				else if ((calls[i].getStartingFloor() <= calls[sizeC].getDesiredFloor()) && (calls[i].getStartingFloor() > currentFloor))
-				{
-					pendingFloor.push_back(calls[i].getStartingFloor());
-					pendingfloorId.push_back(calls[i].getPersonID());
-					exitingFloor.push_back(calls[i].getDesiredFloor());
-					exitingId.push_back(calls[i].getPersonID());
-
-					pendingFloor.push_back(calls[i].getDesiredFloor());
-				}
+				
 
 
 			}
@@ -270,11 +268,13 @@ public:
 
 	}
 
-
+	//Puts Requesters into this elevators pending going up
 	void elevator_movingD(vector<Person>calls)
 	{
 		
 		int sizeC = calls.size();
+		int sizeP = pendingFloor.size();
+		sizeP--;
 		sizeC--;
 		///SWITCHES TO PUT IN ASCENDING ORDER (FOR GOING UP ONLY)
 		if (calls[0].getDirection() == false)
@@ -297,7 +297,7 @@ public:
 
 			}
 		}
-		reverse(calls.begin(), calls.end());
+		reverse(calls.begin(), calls.end());//reverse it for going down
 
 		
 		if (pendingFloor.empty())
@@ -333,7 +333,7 @@ public:
 			for (int i = 0; i < calls.size(); i++)
 			{
 
-				if (calls.size() == 1)
+				if (((calls[i].getStartingFloor() >= pendingFloor[sizeP]) && (calls[i].getStartingFloor() <= currentFloor)))//Picking people up on the way down
 				{
 					pendingFloor.push_back(calls[i].getStartingFloor());
 					pendingfloorId.push_back(calls[i].getPersonID());
@@ -342,16 +342,7 @@ public:
 
 					pendingFloor.push_back(calls[i].getDesiredFloor());
 				}
-				else if ((calls[i].getStartingFloor() >= calls[sizeC].getDesiredFloor()) && (calls[i].getStartingFloor() <= currentFloor))
-				{
-					pendingFloor.push_back(calls[i].getStartingFloor());
-					pendingfloorId.push_back(calls[i].getPersonID());
-					exitingFloor.push_back(calls[i].getDesiredFloor());
-					exitingId.push_back(calls[i].getPersonID());
-
-					pendingFloor.push_back(calls[i].getDesiredFloor());
-				}
-
+				
 
 			}
 		}

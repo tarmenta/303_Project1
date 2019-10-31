@@ -11,7 +11,7 @@ private:
 	bool goingUp;
 	int waitTime;
 	bool button;
-
+	bool onE;
 
 
 
@@ -34,10 +34,12 @@ public: // setters and getters for variables
 		startingFloor = startfloor;
 		desiredFloor = desiredfloor;
 		button = false;
-
+		onE = false;
 
 
 	}
+
+	//All Setters and getters for person
 	void setDirection(bool direction)
 	{
 		goingUp = direction;
@@ -58,7 +60,14 @@ public: // setters and getters for variables
 		return startTime;
 
 	}
-
+	void setonE(bool but)
+	{
+		onE = but;
+	}
+	bool getonE()
+	{
+		return onE;
+	}
 	int getStartingFloor()
 	{
 		return startingFloor;
@@ -71,7 +80,7 @@ public: // setters and getters for variables
 	}
 
 
-	int getTime()  // Figure out Wait times there has to be a way to explain efficiency
+	int getTime()   
 	{
 		return waitTime;
 	}
