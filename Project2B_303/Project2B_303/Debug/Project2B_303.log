@@ -1,0 +1,4 @@
+﻿  Source.cpp
+C:\Users\tarme\Desktop\GitHub\Projects_Homework\Project2B_303\Project2B_303\Header.h(93): warning C4715:  'searchTreeE': not all control paths return a value
+C:\Users\tarme\Desktop\GitHub\Projects_Homework\Project2B_303\Project2B_303\Header.h(166): warning C4715:  'searchTreeD': not all control paths return a value
+  Project2B_303.vcxproj -> C:\Users\tarme\Desktop\GitHub\Projects_Homework\Project2B_303\Debug\Project2B_303.exe
