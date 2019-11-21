@@ -16,7 +16,7 @@ struct node
 struct node* newNode(char Data, string Code)
 {
 	// Allocate memory for new node  
-	//struct node* node = (struct node*)malloc(sizeof(struct node));
+	
 	struct node* node = new struct node;
 	// Assign data to this node 
 	node->data = Data;

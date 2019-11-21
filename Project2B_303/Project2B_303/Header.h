@@ -7,51 +7,86 @@
 
 using namespace std;
 
-void displayBinaryTree(node* root)
-{
-	//cout << "\nThis is the Binary Tree\n";
 
-	
-	cout << endl << root->data << endl;
-	if (!(root->left == NULL))
-	{
-		displayBinaryTree(root->left);
-	}
-	if (!(root->right == NULL))
-	{
-		displayBinaryTree(root->right);
+//void displayString(vector<string> codes)
+//{
+//	int size = codes.size();
+//	for (int i = 0; i < size; i++)
+//	{
+//		cout << codes[i] << endl;
+//	}
+//}
+void selection_sort(vector<int>& vec, vector<string>& codes)
+{
+
+	for (int fill = 0; fill < vec.size(); ++fill) {
+		int pos_min = fill;
+		for (int next = fill + 1; next < vec.size(); ++next) {
+			if (vec[next] < vec[pos_min])
+				pos_min = next;
+		}
+
+		if (vec[fill] != vec[pos_min]) { //make an exchange
+			int temp = vec[pos_min];
+			string temp1 = codes[pos_min];
+
+			vec[pos_min] = vec[fill];
+			codes[pos_min] = codes[fill];//having the code sort just follow along
+
+			vec[fill] = temp;
+			codes[fill] = temp1;
+		}
 	}
 }
 
-void makeBinaryTree(node* root)
+void deleteString(string& str)
 {
-	root->left = newNode('e',"*");
-	root->right = newNode('t',"-");
-	root->left->left = newNode('i',"**");
-	root->left->left->left = newNode('s',"***");
-	root->left->left->left->left = newNode('h',"****");
-	root->left->right = newNode('a',"*-");
-	root->left->right->left = newNode('r',"*-*");
-	root->left->right->right = newNode('w',"*--");
-	root->left->right->right->left = newNode('p',"*--*");
-	root->left->right->right->right = newNode('j',"*---");
-	root->left->right->left->left = newNode('l',"*-**");
-	root->left->left->right = newNode('u',"**-");
-	root->left->left->right->left = newNode('f',"**-*");
-	root->left->left->left->right = newNode('v',"***-");
-	root->right->right = newNode('m',"--");
-	root->right->right->right = newNode('o',"---");
-	root->right->right->left = newNode('g',"--*");
-	root->right->right->left->right = newNode('q',"--*-");
-	root->right->right->left->left = newNode('z',"--**");
-	root->right->left = newNode('n',"-*");
-	root->right->left->right = newNode('k',"-*-");
-	root->right->left->right->right = newNode('y',"-*--");
-	root->right->left->right->left = newNode('c',"-*-*");
-	root->right->left->left = newNode('d',"-**");
-	root->right->left->left->right = newNode('x',"-**-");
-	root->right->left->left->left = newNode('b',"-***");
+	int size = str.size();
+	for (int i = 0; i < (size - 1); i++)
+	{
+		str[i] = str[i + 1];//save over the the character
+	}
+	str.resize(size - 1);//resize the string so no duplicate
 }
+//
+//void displayBinaryTree(node* root)
+//{
+//	
+//
+//	
+//	cout << endl << root->data << endl;
+//	if (!(root->left == NULL))
+//	{
+//		displayBinaryTree(root->left);
+//	}
+//	if (!(root->right == NULL))
+//	{
+//		displayBinaryTree(root->right);
+//	}
+//}
+void makingBT(node* root, string code, char codeChar,int num)
+{
+	//Check the root left and right for null 
+	if ((root->left == NULL) && (code[num] == '.'))
+	{
+		root->left = newNode(codeChar, code); //If null then put new node here
+	}
+	else if ((root->right == NULL) && (code[num] == '_'))
+	{
+		root->right = newNode(codeChar, code); //Same for right if null the save node here
+	}
+	else if ((root->left != NULL) && (code[num] == '.'))//checking for null and the recersive iteration of what side the tree is on
+	{
+		num++;//increase num 
+		makingBT(root->left, code, codeChar, num);//recursive
+	}
+	else if ((root->right != NULL) && (code[num] == '_'))
+	{
+		num++;
+		makingBT(root->right, code, codeChar, num);//recursive
+	}
+}
+
 
 string searchTreeE(node* root, char letter)
 {
@@ -109,7 +144,7 @@ void displayMessage(vector<string> Message)
 		cout << Message[i];
 		if (i != size-1)
 		{
-			cout << "/";
+			cout << " ";
 		}
 	}
 }
@@ -121,7 +156,7 @@ void displayUnMessage(vector<char> Message)
 		cout << Message[i];
 		if (i != size - 1)
 		{
-			cout << "/";
+			cout << " ";
 		}
 	}
 }
